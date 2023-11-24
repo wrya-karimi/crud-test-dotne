@@ -1,3 +1,11 @@
+global using Mc2.CrudTest.Presentation.Shared;
+using AutoMapper;
+using Mc2.CrudTest.Domain.Abstracts.Application;
+using Mc2.CrudTest.Domain.Abstracts.Repositories.CustomerRepositories;
+using Mc2.CrudTest.Domain.Application;
+using Mc2.CrudTest.Infrastructure.Persistence.Contexts;
+using Mc2.CrudTest.Infrastructure.Persistence.Respositories.CustomerRepositories;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.ResponseCompression;
 
 namespace Mc2.CrudTest.Presentation
@@ -13,7 +21,17 @@ namespace Mc2.CrudTest.Presentation
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
 
+            
+
+            builder.Services.AddDbContext<ApplicationDbContext>();
+
+            builder.Services.AddScoped<ICustomerService, CustomerService>();
+            builder.Services.AddScoped<ICustomerReadRepository, CustomerReadRepository>();
+            builder.Services.AddScoped<ICustomerWriteRepository, CustomerWriteRepository>();
+
+
             var app = builder.Build();
+
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
